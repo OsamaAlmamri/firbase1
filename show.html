@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chat</title>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-analytics.js"></script>
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+
+<div class="container">
+
+    <table class="table table-bordered table-sm table-dark table-striped">
+
+        <thead>
+
+        <tr>
+            <th>#</th>
+            <th>name</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>birth_date</th>
+        </tr>
+        </thead>
+        <tbody id="allData">
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyB_a3haSuZsFmy4YS57kJ7AHuvV_DXyGic",
+        authDomain: "codingacademy1234.firebaseapp.com",
+        databaseURL: "https://codingacademy1234.firebaseio.com",
+        projectId: "codingacademy1234",
+        storageBucket: "codingacademy1234.appspot.com",
+        messagingSenderId: "697109574879",
+        appId: "1:697109574879:web:81db05bc25fb5ffd2ba56a",
+        measurementId: "G-P6HC8761YR"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var dbObject = firebase.firestore();
+
+    //<, <=, ==, >, >=, array-contains, in  array-contains-any
+    dbObject.collection("student").where("name","array-contains",'jjj').get().then(function (rows) {
+    // dbObject.collection("student").where("name","in",['jjj',]).get().then(function (rows) {
+    // dbObject.collection("student").get().then(function (rows) {
+        var i = 0;
+        rows.forEach(function (row) {
+            var d = row.data();
+            var newDoc = "  <tr";
+            if (i % 2 == 0)
+                newDoc += " class='success' > ";
+            else
+                newDoc += " class='info' > ";
+
+            newDoc += "    <td> "+ i+ "</td>" +
+                "<td> "+ d.name+ " </td>" +
+                "<td> "+ d.email+ " </td>" +
+                "<td> "+ d.phone+ " </td>" +
+                "<td> "+ d.birth_date+ " </td>" +
+                "</tr>";
+
+
+            $('#allData').html($('#allData').html() + newDoc);
+            i++;
+
+
+        });
+
+    });
+
+
+</script>
+</body>
+</html>
